@@ -1,16 +1,14 @@
-
-
-https://laravel.com/docs/8.x/installation#getting-started-on-linux
-https://www.positronx.io/laravel-autocomplete-search-with-select2-example/
-
-https://api.rawg.io/docs/#operation/developers_read
+# Games Collection POC
+Quick demo website using Laravel, listing a collection of games with possibility to add & remove games.
 
 ## Requirements
-Docker & docker-compose
+- Docker
+- Docker-compose
 
 ## Installation
-cp .env.example .env
-add 127.0.0.1 local.games.com to Host file
+`cp .env.example .env`
+
+add `127.0.0.1 local.games.com` to Host file
 
 ## Access the application
 http://local.games.com:8000/
