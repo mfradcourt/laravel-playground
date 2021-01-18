@@ -97,7 +97,7 @@
                         results: $.map(data, function (item) {
                             return {
                                 text: item.name,
-                                id: item.id
+                                id: item.extId
                             }
                         })
                     };

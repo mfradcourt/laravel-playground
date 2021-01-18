@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Game;
+use App\Repositories\GameAPIRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,38 +27,19 @@ Route::get('/', function () {
 Route::get('/search', function (Request $request) {
     if($request->has('q')) {
         $searchText = $request->q;
+        $gameRepository = new GameAPIRepository();
 
-        $response = Http::get('https://api.rawg.io/api/games', [
-            'search' => $searchText,
-            'ordering' => 'name',
-            'search_precise' => true,
-            'search_exact'=> true
-        ]);
-
-        //@TODO check if the response contains results
-
-        $results = $response->json();
-        $games = array_map(function($game) {
-            return [
-                'id' => $game['id'],
-                'name' => $game['name']
-            ];
-        }, $results['results']);
-
-        return $games;
+        return $gameRepository->searchGames($searchText);
     }
 });
 
 Route::post('/game', function (Request $request) {
-
     $gameId = $request->input('search');
 
-    $response = Http::get('https://api.rawg.io/api/games/' . $gameId);
-    $gameData = $response->json();
+    $gameRepository = new GameAPIRepository();
+    $gameData = $gameRepository->getGame($gameId);
 
-    $game = new Game();
-    $game->name = $gameData['name'];
-    $game->released_at = $gameData['released'];
+    $game = new Game($gameData);
     $game->save();
 
     return redirect('/');
