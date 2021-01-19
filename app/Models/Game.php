@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Game extends Model
+class Game
 {
-    use HasFactory;
+    public $id;
+    public $name;
+    public $released;
 
-    protected $fillable = ['name', 'released_at'];
+    public function __construct($id, $name, $released) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->released = $released;
+    }
 }

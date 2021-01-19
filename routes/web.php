@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Game;
-use App\Repositories\GameAPIRepository;
-use Illuminate\Http\Request;
+use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,37 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $games = Game::orderBy('name', 'asc')->get();
-
-    return view('games', [
-        'games' => $games
-    ]);
-});
-
-Route::get('/search', function (Request $request) {
-    if($request->has('q')) {
-        $searchText = $request->q;
-        $gameRepository = new GameAPIRepository();
-
-        return $gameRepository->searchGames($searchText);
-    }
-});
-
-Route::post('/game', function (Request $request) {
-    $gameId = $request->input('search');
-
-    $gameRepository = new GameAPIRepository();
-    $gameData = $gameRepository->getGame($gameId);
-
-    $game = new Game($gameData);
-    $game->save();
-
-    return redirect('/');
-});
-
-Route::delete('/game/{game}', function (Game $game) {
-    $game->delete();
-
-    return redirect('/');
-});
+Route::get('/', [GameController::class, 'index']);
+Route::get('/search', [GameController::class, 'search']);
+Route::post('/add', [GameController::class, 'add']);
+Route::delete('/delete/{id}', [GameController::class, 'delete']);

@@ -32,7 +32,7 @@
                 <h1>Your Games Collection</h1>
             </div>
 
-            <form action="{{ url('/game') }}" method="POST">
+            <form action="{{ url('/add') }}" method="POST">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col">
@@ -62,11 +62,11 @@
                                 </td>
 
                                 <td class="table-text">
-                                    <div>{{ date('d/m/Y', strtotime($game->released_at)) }}</div>
+                                    <div>{{ date('d/m/Y', strtotime($game->released)) }}</div>
                                 </td>
 
                                 <td>
-                                    <form action="{{ url('game/'.$game->id) }}" method="POST">
+                                    <form action="{{ url('delete/'.$game->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
@@ -97,7 +97,7 @@
                         results: $.map(data, function (item) {
                             return {
                                 text: item.name,
-                                id: item.extId
+                                id: item.id
                             }
                         })
                     };
